@@ -25,9 +25,14 @@ public class Main extends Application {
         StockGrabber tslaGrabber = new StockGrabber();
         StockGrabber aaplGrabber = new StockGrabber();
 
-        IBMObserver ibmObserver = new IBMObserver(ibmGrabber, (View) test);
-        TSLAObserver tslaObserver = new TSLAObserver(tslaGrabber, (View) test);
-        AAPLObserver aaplObserver = new AAPLObserver(aaplGrabber, (View) test);
+        IBMObserver ibmObserver = new IBMObserver(ibmGrabber);
+        ibmObserver.addView((View) test);
+
+        TSLAObserver tslaObserver = new TSLAObserver(tslaGrabber);
+        tslaObserver.addView((View) test);
+
+        AAPLObserver aaplObserver = new AAPLObserver(aaplGrabber);
+        aaplObserver.addView((View) test);
 
         new Thread(new GetTheStock(ibmGrabber, "IBM", 200)).start();
         new Thread(new GetTheStock(tslaGrabber, "TSLA", 300)).start();

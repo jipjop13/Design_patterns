@@ -2,22 +2,25 @@ package observer;
 
 import view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AAPLObserver implements Observer {
     private Subject stockGrabber;
     private double aaplPrice;
 
-    private View view;
+    private List<View> viewList;
 
-    public AAPLObserver(Subject stockGrabber, View view) {
+    public AAPLObserver(Subject stockGrabber) {
         this.stockGrabber = stockGrabber;
         this.stockGrabber.registerObserver(this);
 
         this.aaplPrice = 0.0;
-        this.view = view;
+        this.viewList = new ArrayList<>();
     }
 
-    public double getAaplPrice() {
-        return aaplPrice;
+    public void addView(View view) {
+        this.viewList.add(view);
     }
 
     @Override
@@ -25,6 +28,8 @@ public class AAPLObserver implements Observer {
         this.aaplPrice = stockPrice;
         System.out.println(this.aaplPrice);
 
-        view.update(this, stockPrice);
+        for(View v : viewList) {
+            v.update(this, stockPrice);
+        }
     }
 }
