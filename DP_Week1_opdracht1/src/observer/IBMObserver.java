@@ -1,6 +1,5 @@
 package observer;
 
-import javafx.scene.layout.GridPane;
 import view.View;
 
 public class IBMObserver implements Observer {
@@ -25,5 +24,7 @@ public class IBMObserver implements Observer {
     public void update(double stockPrice) {
         this.ibmPrice = stockPrice;
         System.out.println(this.ibmPrice);
+
+        view.update(this, stockPrice);
     }
 }

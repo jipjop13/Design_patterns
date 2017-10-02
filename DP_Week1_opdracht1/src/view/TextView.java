@@ -5,6 +5,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import observer.AAPLObserver;
+import observer.IBMObserver;
+import observer.Observer;
+import observer.TSLAObserver;
 
 public class TextView extends GridPane implements View {
     private Text ibmPriceText;
@@ -33,7 +37,13 @@ public class TextView extends GridPane implements View {
     }
 
     @Override
-    public void update() {
-
+    public synchronized void update(Observer o, double price) {
+        if(o instanceof IBMObserver) {
+            ibmPriceText.setText("" + price);
+        } else if(o instanceof TSLAObserver) {
+            tslPriceText.setText("" + price);
+        } else if(o instanceof AAPLObserver) {
+            aaplPriceText.setText("" + price);
+        }
     }
 }
