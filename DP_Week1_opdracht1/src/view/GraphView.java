@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -48,14 +49,18 @@ public class GraphView extends GridPane implements View {
     public synchronized void update(Observer o, double price) {
         String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
 
-        if(o instanceof IBMObserver) {
-            ibmData.getData().add(new XYChart.Data(timeStamp, price));
+        try {
+            if(o instanceof IBMObserver) {
+                Platform.runLater(() -> ibmData.getData().add(new XYChart.Data(timeStamp, price)));
 
-        } else if(o instanceof TSLAObserver) {
-            tslaData.getData().add(new XYChart.Data(timeStamp, price));
+            } else if(o instanceof TSLAObserver) {
+                Platform.runLater(() -> tslaData.getData().add(new XYChart.Data(timeStamp, price)));
 
-        } else if(o instanceof AAPLObserver) {
-            aaplData.getData().add(new XYChart.Data(timeStamp, price));
+            } else if(o instanceof AAPLObserver) {
+                Platform.runLater(() -> aaplData.getData().add(new XYChart.Data(timeStamp, price)));
+
+            }
+        } catch(Exception e) {
 
         }
     }
