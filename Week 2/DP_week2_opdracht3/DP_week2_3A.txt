@@ -1,0 +1,5 @@
+Sorteren van arrays
+Paint methode in JFrame
+Applets
+
+(Volgens boek)
